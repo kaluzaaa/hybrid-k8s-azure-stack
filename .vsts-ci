@@ -1,0 +1,21 @@
+resources:
+- repo: self
+queue:
+  name: Hosted Ubuntu 1604
+steps:
+- task: Docker@1
+  displayName: 'Build an image'
+  inputs:
+    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureContainerRegistry: beyondpl.azurecr.io
+    dockerFile: app/api/Dockerfile
+    imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
+
+
+- task: Docker@1
+  displayName: 'Push an image'
+  inputs:
+    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureContainerRegistry: beyondpl.azurecr.io
+    command: 'Push an image'
+    imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
