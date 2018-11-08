@@ -4,8 +4,6 @@ queue:
   name: Hosted Ubuntu 1604
 steps:
 
-- script: printenv
-
 - task: Docker@1
   displayName: 'Build an image - API'
   inputs:
@@ -31,7 +29,7 @@ steps:
     imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
     buildArguments: |
      VCS_REF=$(Build.SourceVersion)
-     BUILD_DATE=
+     BUILD_DATE=$(SYSTEM.PIPELINESTARTTIME)
      IMAGE_TAG_REF=$(Build.BuildNumber)
 
 - task: Docker@1
