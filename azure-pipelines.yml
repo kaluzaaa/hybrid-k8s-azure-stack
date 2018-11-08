@@ -11,6 +11,10 @@ steps:
     azureContainerRegistry: beyondpl.azurecr.io
     dockerFile: app/api/Dockerfile
     imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
+    buildArguments: |
+     VCS_REF=$(Build.SourceVersion)
+     BUILD_DATE=$(SYSTEM.PIPELINESTARTTIME)
+     IMAGE_TAG_REF=$(Build.BuildNumber)
 
 - task: Docker@1
   displayName: 'Push an image - API'
@@ -47,6 +51,10 @@ steps:
     azureContainerRegistry: beyondpl.azurecr.io
     dockerFile: app/db/Dockerfile
     imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
+    buildArguments: |
+     VCS_REF=$(Build.SourceVersion)
+     BUILD_DATE=$(SYSTEM.PIPELINESTARTTIME)
+     IMAGE_TAG_REF=$(Build.BuildNumber)
 
 - task: Docker@1
   displayName: 'Push an image - DB'
