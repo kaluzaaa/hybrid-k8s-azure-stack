@@ -3,6 +3,9 @@ resources:
 queue:
   name: Hosted Ubuntu 1604
 steps:
+
+- script: printenv
+
 - task: Docker@1
   displayName: 'Build an image - API'
   inputs:
@@ -26,6 +29,10 @@ steps:
     azureContainerRegistry: beyondpl.azurecr.io
     dockerFile: app/web/Dockerfile
     imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
+    buildArguments: |
+     VCS_REF=$(Build.SourceVersion)
+     BUILD_DATE=
+     IMAGE_TAG_REF=$(Build.BuildNumber)
 
 - task: Docker@1
   displayName: 'Push an image - WEB'
@@ -44,7 +51,7 @@ steps:
     imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
 
 - task: Docker@1
-  displayName: 'Push an image- DB'
+  displayName: 'Push an image - DB'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
     azureContainerRegistry: beyondpl.azurecr.io
