@@ -12,5 +12,6 @@ COPY ./heroes.json /heroes.json
 COPY ./ratings.json /ratings.json
 COPY ./sites.json /sites.json
 COPY ./import.sh /import.sh
+COPY dump dump
 
 EXPOSE 27017
