@@ -9,6 +9,7 @@
     "container": "NODE_ENV='development' node ./bin/www"
   },
   "dependencies": {
+    "applicationinsights": "^1.0.6",
     "async": "^2.6.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",

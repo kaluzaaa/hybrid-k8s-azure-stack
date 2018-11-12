@@ -1,3 +1,16 @@
+require('applicationinsights');
+var ai = require('applicationinsights');
+ai.setup(process.env.APPINSIGHTS_INSTRUMENTATION_KEY)
+ .setAutoDependencyCorrelation(true)
+.setAutoCollectRequests(true)
+.setAutoCollectPerformance(true)
+.setAutoCollectExceptions(true)
+.setAutoCollectDependencies(true)
+.setAutoCollectConsole(true)
+.setUseDiskRetryCaching(true)
+.start();
+ai.defaultClient.context.tags[ai.defaultClient.context.keys.cloudRole] = "WEB";
+
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -74,6 +87,8 @@ module.exports = {
         KUBE_NODE_NAME: JSON.stringify(process.env.KUBE_NODE_NAME || "NODE NAME"),
         KUBE_POD_NAME: JSON.stringify(process.env.KUBE_POD_NAME || "POD NAME"),
         KUBE_POD_IP: JSON.stringify(process.env.KUBE_POD_IP || "POD IP"),
+        APPINSIGHTS_INSTRUMENTATION_KEY: JSON.stringify(process.env.APPINSIGHTS_INSTRUMENTATION_KEY || "POD IP"),
+
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
