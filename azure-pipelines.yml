@@ -2,13 +2,17 @@ resources:
 - repo: self
 queue:
   name: Hosted Ubuntu 1604
+
+variables:
+  ContainerRegistry: beyondpl.azurecr.io
+
 steps:
 
 - task: Docker@1
   displayName: 'Build an image - API'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
-    azureContainerRegistry: beyondpl.azurecr.io
+    azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/api/Dockerfile
     imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
     buildArguments: |
@@ -20,7 +24,7 @@ steps:
   displayName: 'Push an image - API'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
-    azureContainerRegistry: beyondpl.azurecr.io
+    azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
     imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
 
@@ -28,7 +32,7 @@ steps:
   displayName: 'Build an image - WEB'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
-    azureContainerRegistry: beyondpl.azurecr.io
+    azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/web/Dockerfile
     imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
     buildArguments: |
@@ -40,7 +44,7 @@ steps:
   displayName: 'Push an image - WEB'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
-    azureContainerRegistry: beyondpl.azurecr.io
+    azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
     imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
 
@@ -48,7 +52,7 @@ steps:
   displayName: 'Build an image - DB'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
-    azureContainerRegistry: beyondpl.azurecr.io
+    azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/db/Dockerfile
     imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
     buildArguments: |
@@ -60,6 +64,6 @@ steps:
   displayName: 'Push an image - DB'
   inputs:
     azureSubscriptionEndpoint: 'k8s-workshop'
-    azureContainerRegistry: beyondpl.azurecr.io
+    azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
     imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
