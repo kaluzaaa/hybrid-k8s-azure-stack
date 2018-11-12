@@ -1,4 +1,17 @@
+require('applicationinsights');
 require('dotenv').config();
+var ai = require('applicationinsights');
+ai.setup(process.env.APPINSIGHTS_INSTRUMENTATION_KEY)
+ .setAutoDependencyCorrelation(true)
+.setAutoCollectRequests(true)
+.setAutoCollectPerformance(true)
+.setAutoCollectExceptions(true)
+.setAutoCollectDependencies(true)
+.setAutoCollectConsole(true)
+.setUseDiskRetryCaching(true)
+.start();
+ai.defaultClient.context.tags[ai.defaultClient.context.keys.cloudRole] = "API";
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -39,6 +52,9 @@ mongoose.connect(process.env.MONGODB_URI, connectOptions, function(error){
 
 var mongo = require('./routes/mongo');
 var index = require('./routes/index');
+
+// Add your instrumentation key or use the APPLICATIONINSIGHTSKEY environment variable on your production machine to start collecting data.
+
 
 app.use('/', index);
 app.use('/api', mongo);

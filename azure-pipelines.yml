@@ -5,13 +5,13 @@ queue:
 
 variables:
   ContainerRegistry: beyondpl.azurecr.io
-
+  AzureSubscriptionEndpoint: k8s-workshop
 steps:
 
 - task: Docker@1
   displayName: 'Build an image - API'
   inputs:
-    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/api/Dockerfile
     imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
@@ -23,7 +23,7 @@ steps:
 - task: Docker@1
   displayName: 'Push an image - API'
   inputs:
-    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
     imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
@@ -31,7 +31,7 @@ steps:
 - task: Docker@1
   displayName: 'Build an image - WEB'
   inputs:
-    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/web/Dockerfile
     imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
@@ -43,7 +43,7 @@ steps:
 - task: Docker@1
   displayName: 'Push an image - WEB'
   inputs:
-    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
     imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
@@ -51,7 +51,7 @@ steps:
 - task: Docker@1
   displayName: 'Build an image - DB'
   inputs:
-    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/db/Dockerfile
     imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
@@ -63,7 +63,7 @@ steps:
 - task: Docker@1
   displayName: 'Push an image - DB'
   inputs:
-    azureSubscriptionEndpoint: 'k8s-workshop'
+    azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
     imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
