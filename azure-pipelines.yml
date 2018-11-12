@@ -5,7 +5,7 @@ queue:
 
 variables:
   ContainerRegistry: beyondpl.azurecr.io
-  AzureSubscriptionEndpoint: k8s-workshop
+  AzureSubscriptionEndpoint: Azure
 steps:
 
 - task: Docker@1
