@@ -35,7 +35,7 @@ spec:
         name:  heroes-api
     spec:
       containers:
-      - image: $(ContainerRegistry)/$(Build.Repository.Name)/rating-api:$(Build.BuildNumber)
+      - image: #{ContainerRegistry}#/#{Build.Repository.Name}#/rating-api:#{Build.BuildNumber}#
         name:  heroes-api-cntnr
         env:
         - name: MONGODB_URI
@@ -90,7 +90,7 @@ spec:
         name:  heroes-web
     spec:
       containers:
-      - image: $(ContainerRegistry)/$(Build.Repository.Name)/rating-web:$(Build.BuildNumber)
+      - image: #{ContainerRegistry}#/#{Build.Repository.Name}#/rating-web:#{Build.BuildNumber}#
         name:  heroes-web-cntnr
         env:
         - name:  API
