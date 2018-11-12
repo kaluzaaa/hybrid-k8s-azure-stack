@@ -14,7 +14,7 @@ steps:
     azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/api/Dockerfile
-    imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
+    imageName: '$(Build.Repository.Name)/rating-api:$(Build.BuildNumber)'
     buildArguments: |
      VCS_REF=$(Build.SourceVersion)
      BUILD_DATE=$(SYSTEM.PIPELINESTARTTIME)
@@ -26,7 +26,7 @@ steps:
     azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
-    imageName: '$(Build.Repository.Name)/api:$(Build.BuildNumber)'
+    imageName: '$(Build.Repository.Name)/rating-api:$(Build.BuildNumber)'
 
 - task: Docker@1
   displayName: 'Build an image - WEB'
@@ -34,7 +34,7 @@ steps:
     azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/web/Dockerfile
-    imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
+    imageName: '$(Build.Repository.Name)/rating-web:$(Build.BuildNumber)'
     buildArguments: |
      VCS_REF=$(Build.SourceVersion)
      BUILD_DATE=$(SYSTEM.PIPELINESTARTTIME)
@@ -46,7 +46,7 @@ steps:
     azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
-    imageName: '$(Build.Repository.Name)/web:$(Build.BuildNumber)'
+    imageName: '$(Build.Repository.Name)/rating-web:$(Build.BuildNumber)'
 
 - task: Docker@1
   displayName: 'Build an image - DB'
@@ -54,7 +54,7 @@ steps:
     azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     dockerFile: app/db/Dockerfile
-    imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
+    imageName: '$(Build.Repository.Name)/rating-db:$(Build.BuildNumber)'
     buildArguments: |
      VCS_REF=$(Build.SourceVersion)
      BUILD_DATE=$(SYSTEM.PIPELINESTARTTIME)
@@ -66,4 +66,9 @@ steps:
     azureSubscriptionEndpoint: $(AzureSubscriptionEndpoint)
     azureContainerRegistry: $(ContainerRegistry)
     command: 'Push an image'
-    imageName: '$(Build.Repository.Name)/db:$(Build.BuildNumber)'
+    imageName: '$(Build.Repository.Name)/rating-db:$(Build.BuildNumber)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: 'app/heroes-k8s-deployment.yaml' 
+    artifactName: 'heroes-k8s-deployment'
