@@ -19,7 +19,6 @@ metadata:
   name:  heroes-api-deploy
   labels:
     name:  heroes-api
-    ReleaseName: #{Release.ReleaseName}#
 spec:
   replicas: 1
   strategy:
@@ -30,12 +29,10 @@ spec:
   selector:
     matchLabels:
       name: heroes-api
-      ReleaseName: #{Release.ReleaseName}#
   template:
     metadata:
       labels:
         name:  heroes-api
-        ReleaseName: #{Release.ReleaseName}#
     spec:
       containers:
       - image: #{ContainerRegistry}#/#{Build.Repository.Name}#/rating-api:#{Build.BuildNumber}#
@@ -51,6 +48,8 @@ spec:
             secretKeyRef:
               name: heroes-secret
               key: APPINSIGHTS_INSTRUMENTATION_KEY
+        - name:  ReleaseName
+          value:  #{Release.ReleaseName}#
         ports:
         - containerPort:  3000
           name:  heroes-api
@@ -77,7 +76,6 @@ metadata:
   name:  heroes-web-deploy
   labels:
     name:  heroes-web
-    ReleaseName: #{Release.ReleaseName}#
 spec:
   replicas: 1
   strategy:
@@ -88,12 +86,10 @@ spec:
   selector:
     matchLabels:
       name: heroes-web
-      ReleaseName: #{Release.ReleaseName}#
   template:
     metadata:
       labels:
         name:  heroes-web
-        ReleaseName: #{Release.ReleaseName}#
     spec:
       containers:
       - image: #{ContainerRegistry}#/#{Build.Repository.Name}#/rating-web:#{Build.BuildNumber}#
@@ -101,6 +97,8 @@ spec:
         env:
         - name:  API
           value:  http://api:3000/
+        - name:  ReleaseName
+          value:  #{Release.ReleaseName}#
         - name: APPINSIGHTS_INSTRUMENTATION_KEY
           valueFrom:
             secretKeyRef:
