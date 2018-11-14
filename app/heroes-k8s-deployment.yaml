@@ -19,6 +19,7 @@ metadata:
   name:  heroes-api-deploy
   labels:
     name:  heroes-api
+    build: #{Build.BuildNumber}#
 spec:
   replicas: 1
   strategy:
@@ -29,10 +30,12 @@ spec:
   selector:
     matchLabels:
       name: heroes-api
+      build: #{Build.BuildNumber}#
   template:
     metadata:
       labels:
         name:  heroes-api
+        build: #{Build.BuildNumber}#
     spec:
       containers:
       - image: #{ContainerRegistry}#/#{Build.Repository.Name}#/rating-api:#{Build.BuildNumber}#
@@ -74,6 +77,7 @@ metadata:
   name:  heroes-web-deploy
   labels:
     name:  heroes-web
+    build: #{Build.BuildNumber}#
 spec:
   replicas: 1
   strategy:
@@ -84,10 +88,12 @@ spec:
   selector:
     matchLabels:
       name: heroes-web
+      build: #{Build.BuildNumber}#
   template:
     metadata:
       labels:
         name:  heroes-web
+        build: #{Build.BuildNumber}#
     spec:
       containers:
       - image: #{ContainerRegistry}#/#{Build.Repository.Name}#/rating-web:#{Build.BuildNumber}#
